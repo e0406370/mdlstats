@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>kuryana</h1>
+  <h1>Original Work by kuryana</h1>
 
   <p>A simple MyDramaList.com scraper api.</p>
   <p>This scrapes on the go so it might be slow.</p>
