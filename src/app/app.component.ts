@@ -43,7 +43,6 @@ export class AppComponent implements OnInit {
           this.appSvc.retrieveDramaInfo(dramaID)
             .then((res) => {
               this.parseSvc.populatePersonCount(res);
-              console.info(this.parseSvc.returnSortedMapByHighest());
             })
             .catch((err) => {
               console.error(err);
