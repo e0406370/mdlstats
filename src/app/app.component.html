@@ -1,0 +1,11 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()">
+  <div class="mb-2">
+    <div>User ID:</div>
+    <div>(e.g. <span class="text-decoration-underline">abc123</span> of https://mydramalist.com/profile/abc123)</div>
+    <input type="text" id="user" formControlName="user" required>
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-2">
+    Submit
+  </button>
+</form>
