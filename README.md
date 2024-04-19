@@ -1,6 +1,6 @@
 # Most Watched Actors/Actresses
 
-- Tracks the most watched actors and actresses based on each drama, drama special, movie, or TV show listed in the user's "Completed" list on MyDramaList.
+- Tracks the most watched actors and actresses based on each drama, drama special, movie, or TV show listed in the user's 'Completed' list on MyDramaList.
 
 - Note that it only specifically focuses on the top 6 cast members that appear in the details page of each item.
 

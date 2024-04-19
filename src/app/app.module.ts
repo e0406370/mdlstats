@@ -11,6 +11,7 @@ import { ParseService } from './service/parse.service';
 
 import { MapEntriesPipe } from './pipe/entries.pipe';
 import { SortByTitlePipe } from './pipe/sort.pipe';
+import { TopFiveEntriesPipe } from './pipe/topfive.pipe';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,8 @@ import { SortByTitlePipe } from './pipe/sort.pipe';
     ReactiveFormsModule,
     HttpClientModule,
     MapEntriesPipe,
-    SortByTitlePipe
+    SortByTitlePipe,
+    TopFiveEntriesPipe
   ],
   providers: [
     ApiService,
