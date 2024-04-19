@@ -13,8 +13,6 @@ import { Person } from './utility/models';
   
 export class AppComponent implements OnInit {
 
-  title = 'MyDramaList Statistics';
-
   private fb = inject(FormBuilder);
   form!: FormGroup;
 
@@ -31,16 +29,19 @@ export class AppComponent implements OnInit {
   secondPhaseError = false;
 
   ngOnInit(): void {
+
     this.form = this.createForm();
   }
 
   createForm(): FormGroup {
+
     return this.fb.group({
       user: this.fb.control<string>('', [ Validators.required ]),
     });
   }
 
   resetForm(): void {
+
     this.form = this.createForm();
 
     this.results = new Map;
@@ -54,32 +55,38 @@ export class AppComponent implements OnInit {
   }
 
   submitFirstPhase(): void {
+
     this.userID = this.form.value["user"];
 
     this.appSvc
       .retrieveUserDramaList(this.userID)
       .then((res) => {
+
         this.parseSvc.retrieveCompletedDramas(res);
 
         this.firstPhaseCompleted = true;
         console.info(this.parseSvc.completedDramasMap);
       })
       .catch((err) => {
+
         this.firstPhaseError = true;
         console.error(err);
       });
   }
 
   submitSecondPhase(): void {
+
     const promises: Promise<any>[] = [];
 
     for (const dramaID of this.parseSvc.completedDramasMap.values()) {
       promises.push(this.appSvc
         .retrieveDramaInfo(dramaID)
         .then((res) => {
+
           this.parseSvc.populatePersonCount(res);
         })
         .catch((err) => {
+          
           this.secondPhaseError = true;
           console.error(err);
         })
@@ -88,6 +95,7 @@ export class AppComponent implements OnInit {
 
     Promise.all(promises)
       .finally(() => {
+        
         this.secondPhaseCompleted = true;
         this.results = this.parseSvc.returnSortedMapByHighest();
       }

@@ -14,6 +14,7 @@ export class ParseService {
   personCountMap: Map<string, Person> = new Map;
 
   retrieveCompletedDramas(res: any): void {
+
     res.data.list.Completed.items.map(
       (drama: any) => {
         this.completedDramasMap.set(drama.name, drama.id)
@@ -22,6 +23,7 @@ export class ParseService {
   }
 
   populatePersonCount(res: any): void {
+
     const dramaName: string = res.data.complete_title;
 
     res.data.casts.map(
@@ -56,6 +58,7 @@ export class ParseService {
   }
 
   returnSortedMapByHighest(): Map<string, Person> {
+
     const sortedMap = new Map([...this.personCountMap.entries()]
       .sort(
         (p1, p2) => p2[1].count - p1[1].count
@@ -65,6 +68,7 @@ export class ParseService {
   }
 
   returnSortedMapByLowest(): Map<string, Person> {
+
     const sortedMap = new Map([...this.personCountMap.entries()]
       .sort(
         (p1, p2) => p1[1].count - p2[1].count
@@ -74,6 +78,7 @@ export class ParseService {
   }
 
   resetMaps(): void {
+    
     this.completedDramasMap = new Map();
     this.personCountMap = new Map();
   }
