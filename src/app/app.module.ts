@@ -4,9 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ApiService } from './api.service';
 import { HttpClientModule } from '@angular/common/http';
-import { ParseService } from './parse.service';
+
+import { ApiService } from './service/api.service';
+import { ParseService } from './service/parse.service';
+
+import { MapEntriesPipe } from './pipe/entries.pipe';
+import { SortByTitlePipe } from './pipe/sort.pipe';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,8 +19,14 @@ import { ParseService } from './parse.service';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MapEntriesPipe,
+    SortByTitlePipe
   ],
-  providers: [ApiService, ParseService],
+  providers: [
+    ApiService,
+    ParseService
+  ],
   bootstrap: [AppComponent],
 })
+  
 export class AppModule {}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Person } from './models';
+import { Person } from '../utility/models';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,6 @@ export class ParseService {
         const personName: string = person.name;
 
         if (!this.personCountMap.get(personName)) {
-
           const newPerson: Person = {
             count: 1,
             image: person.profile_image,
@@ -44,7 +43,6 @@ export class ParseService {
         }
 
         else {
-
           const existingPerson: Person = this.personCountMap.get(personName)!;
 
           existingPerson.count++;
@@ -60,7 +58,6 @@ export class ParseService {
   }
 
   returnSortedMapByHighest() {
-
     const sortedMap = new Map([...this.personCountMap.entries()]
       .sort(
         (p1, p2) => p2[1].count - p1[1].count
@@ -70,7 +67,6 @@ export class ParseService {
   }
 
   returnSortedMapByLowest() {
-
     const sortedMap = new Map([...this.personCountMap.entries()]
       .sort(
         (p1, p2) => p1[1].count - p2[1].count

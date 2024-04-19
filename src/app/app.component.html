@@ -1,11 +1,62 @@
-<form [formGroup]="form" (ngSubmit)="submitForm()">
+<form [formGroup]="form">
   <div class="mb-2">
     <div>User ID:</div>
     <div>(e.g. <span class="text-decoration-underline">abc123</span> of https://mydramalist.com/profile/abc123)</div>
     <input type="text" id="user" formControlName="user" required>
   </div>
 
-  <button type="submit" class="btn btn-primary mt-2">
+  <button type="button" class="btn btn-primary mt-2" (click)="submitForm()">
     Submit
   </button>
+
+  <button type="button" class="btn btn-danger ms-2 mt-2" (click)="resetForm()">
+    Clear
+  </button>
 </form>
+
+<table 
+  class="table table-striped table-bordered table-dark mt-2"
+  *ngIf="results.size> 0; else showErrorMessage"
+>
+  <thead>
+    <tr>
+      <th>I/N</th>
+      <th>Image</th>
+      <th>Person</th>
+      <th>Count</th>
+      <th>Dramas / Drama Specials / Movies / TV Shows</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let result of results | mapEntries; let index_number = index">
+      <td class="fs-6">{{ index_number + 1 }}</td>
+      <td>
+        <a [href]="result.value.link" target="_blank" rel="noopener noreferrer">
+          <img [src]="result.value.image" height="200px" width="200px" />
+        </a>
+      </td>
+      <td class="fs-6">{{ result.key }}</td>
+      <td class="fs-6">{{ result.value.count }}</td>
+      <td class="fs-6">
+        <ul>
+          <li *ngFor = "let drama of result.value.dramas | sortByTitle" >
+            {{ drama }}
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<ng-template #showErrorMessage>
+  @if (firstResult) {
+
+  }
+  @else {
+    <div class="text-monospace fs-3 mt-2">
+      No results found. Either the profile link is invalid or the completed list is empty.
+    </div>
+  }
+</ng-template>
