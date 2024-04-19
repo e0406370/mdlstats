@@ -38,15 +38,17 @@ export class AppComponent implements OnInit {
       .retrieveUserDramaList(userVal)
       .then((res) => {
         this.parseSvc.retrieveCompletedDramas(res);
-
+      })
+      .then(() => {
         for (const dramaID of this.parseSvc.completedDramasMap.values()) {
-          this.appSvc.retrieveDramaInfo(dramaID)
+          this.appSvc
+            .retrieveDramaInfo(dramaID)
             .then((res) => {
               this.parseSvc.populatePersonCount(res);
             })
             .catch((err) => {
               console.error(err);
-            })
+            });
         }
       })
       .catch((err) => {
