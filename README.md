@@ -1,4 +1,4 @@
-## Features
+## Current Features
 
 ### Allows users to identify the most frequently watched actors / actresses based on each drama, movie, or TV show listed in the user's 'Completed' list on MyDramaList.
 
