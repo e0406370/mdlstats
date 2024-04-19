@@ -1,0 +1,102 @@
+<form [formGroup]="form">
+  <div class="mb-2">
+    <div>User ID:</div>
+    <div>(e.g. <span class="text-decoration-underline">abc123</span> of https://mydramalist.com/profile/abc123)</div>
+    <input type="text" id="user" formControlName="user" [disabled]="firstPhaseCompleted">
+  </div>
+
+  <button type="button" class="btn btn-primary mt-2" (click)="submitFirstPhase()" [disabled]="firstPhaseCompleted || form.invalid">
+    Submit Phase 1
+    <br />
+    <span><small>(Retrieve completed list)</small></span>
+  </button>
+  
+  <button type="button" class="btn btn-info ms-2 mt-2" (click)="submitSecondPhase()" [disabled]="!firstPhaseCompleted || secondPhaseCompleted || form.invalid">
+    Submit Phase 2
+    <br />
+    <span><small>(Retrieve drama information)</small></span>
+  </button>
+  
+  <button type="button" class="btn btn-danger ms-2 mt-2" (click)="resetForm()" [disabled]="!firstPhaseCompleted && !secondPhaseCompleted">
+    Reset Input
+    <br />
+    <span><small>(Revert back to Phase 1)</small></span>
+  </button>
+</form>
+
+<div *ngIf="firstPhaseCompleted" class="text-success">
+  <div>  
+    <span>✔</span> Analysed User ID: {{ userID }}
+  </div>
+
+  <div>
+    <span>✔</span> Completed List: {{ parseSvc.completedDramasMap.size }} items
+  </div>
+
+  <div>
+    <span>✔</span> Proceed to Phase 2.
+  </div>
+</div>
+<div *ngIf="firstPhaseError" class="text-danger">
+  <div>
+    <span>✗</span> This userID does not exist or the profile is set to private.
+  </div>
+</div>
+<br />
+
+<div *ngIf="secondPhaseCompleted" class="text-success">
+  <div>  
+    <span>✔</span> Total Number: {{ parseSvc.personCountMap.size }} people
+  </div>
+  <div>
+    <ul> <span>✔</span> Top 5
+      <li *ngFor="let entry of parseSvc.returnSortedMapByHighest() | topFiveEntries">
+        {{ entry[0] }}: {{ entry[1].count }}
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="results.size > 0">
+  <div class="error-box alert alert-secondary text-decoration-none p-2 mt-3 mb-3 rounded">
+    <h1 class="profile-heading text-center text-warning">
+      Results for <span class="text-decoration-underline">{{ userID }}</span>
+    </h1>  
+  </div>
+
+  <table class="table table-striped table-bordered table-dark mt-2">
+    <thead>
+      <tr>
+        <th>I/N</th>
+        <th>Image</th>
+        <th>Person</th>
+        <th>Count</th>
+        <th>Dramas / Drama Specials / Movies / TV Shows</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let result of results | mapEntries; let index_number = index">
+        <td class="fs-6">{{ index_number + 1 }}</td>
+        <td>
+          <a
+            [href]="result.value.link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img [src]="result.value.image" height="200px" width="200px" />
+          </a>
+        </td>
+        <td class="fs-6">{{ result.key }}</td>
+        <td class="fs-6">{{ result.value.count }}</td>
+        <td class="fs-6">
+          <ul>
+            <li *ngFor="let drama of result.value.dramas | sortByTitle">
+              {{ drama }}
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

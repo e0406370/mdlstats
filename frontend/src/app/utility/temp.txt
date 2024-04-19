@@ -1,0 +1,27 @@
+  personDramas!: string[];
+  commonDramas!: string[];
+
+  person: this.fb.control<string>(''),
+
+  const personVal = this.form.value['person'];
+
+  this.appSvc
+  .retrievePersonInfo(personVal)
+  .then((res) => {
+    this.personDramas = res.data.works.Drama.map(
+      (drama: any) => drama.title.name
+    );
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+  this.commonDramas = this.completedDramas.filter((dC) =>
+    this.personDramas.some((dP) => dC === dP)
+  );
+
+  <div>
+    <div>Person Name:</div>
+    <div>(e.g. <span class="text-decoration-underline">494-ishihara-satomi</span> of https://mydramalist.com/people/494-ishihara-satomi)</div>
+    <input type="text" id="person" formControlName="person" required>
+  </div>
